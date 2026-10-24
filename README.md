@@ -1,4 +1,4 @@
-# CurseForge 下载源
+﻿# CurseForge 下载源
 
 [![HMCL Plugin](https://img.shields.io/badge/HMCL-plugin-blue)](https://github.com/topics/erren282s-launcher-plugins)
 [![Version](https://img.shields.io/badge/version-1.2.1-green)]()
@@ -163,4 +163,13 @@ java -cp "out-test;out;<HMCL jar>;<JavaFX jars>" org.dsh.cfkey.KeyVerifierTest
 - **1.2.0**：**修复「正确 key 仍被拒绝」**。启动器在 `NetworkUtils` 里快照了一份 key 表，只改 `API_KEY` 不会更新它，导致请求不带 header、一律 403。现在两处同步写入。校验也改用 `HttpURLConnection` 读真实状态码（启动器的 `ignoreHttpErrorCode` 不生效）。
 - **1.1.0**：修复校验漏洞——`/v1/categories` 无需 key 即返回数据，导致任何 key 都被判为有效（会把错误 key 保存下来）。改用 `/v1/mods/search`。
 - **1.0.0**：首次发布。
+---
 
+## 说明：本项目为 Vibe Coding 产物
+
+**本项目的全部代码均由 AI（大语言模型）生成**，通过对话式编程（vibe coding）完成——
+人类只提出需求、给出反馈与验收，不手写实现代码。
+
+- 代码可能包含未经验证的边界情况、不一致的风格，或与常规工程实践不同的设计取舍
+- 请在生产环境使用前自行审查、测试与评估
+- 欢迎提交 issue 或 PR 改进
