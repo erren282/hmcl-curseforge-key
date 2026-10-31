@@ -1,7 +1,7 @@
-﻿# CurseForge 下载源
+# 更好的下载
 
 [![HMCL Plugin](https://img.shields.io/badge/HMCL-plugin-blue)](https://github.com/topics/erren282s-launcher-plugins)
-[![Version](https://img.shields.io/badge/version-1.2.1-green)]()
+[![Version](https://img.shields.io/badge/version-1.2.2-green)]()
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
 配置 CurseForge API Key 并把请求转发到可用镜像
