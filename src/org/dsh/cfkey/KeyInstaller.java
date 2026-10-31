@@ -55,7 +55,7 @@ final class KeyInstaller {
     /// The key currently in effect, or an empty string.
     static String currentKey() {
         try {
-            return CurseForgeRemoteAddonRepository.API_KEY;
+            return CurseForgeRemoteAddonRepository.getApiKey();
         } catch (Throwable t) {
             return "";
         }
@@ -63,10 +63,11 @@ final class KeyInstaller {
 
     /// Replaces the launcher's API key.
     ///
-    /// <p>The value is also set as a system property, which is the launcher's own documented
-    /// override. That alone does not help a running launcher — the field is read once during
-    /// class initialisation — but it means the key survives if anything re-reads the
-    /// property, and it keeps the two sources consistent.</p>
+    /// <p>Launchers that expose [CurseForgeRemoteAddonRepository#setApiKey] are written through
+    /// that method: the key is a plain (non-final) field there, and the network layer reads it per
+    /// request, so a key installed now takes effect immediately. Older launchers only have the
+    /// `final` constant, where a reflective write is attempted; that path is unreliable on modern
+    /// JVMs, which is why the launcher side was changed.</p>
     ///
     /// @param key the key to install; must not be blank
     /// @return a result describing what happened, never null
@@ -79,7 +80,15 @@ final class KeyInstaller {
         try {
             System.setProperty("hmcl.curseforge.apikey", value);
         } catch (Throwable ignored) {
-            // A security manager could refuse this; the field write below is what matters.
+            // A security manager could refuse this; the setter below is what matters.
+        }
+
+        // Preferred path: the setter the launcher provides.
+        try {
+            CurseForgeRemoteAddonRepository.setApiKey(value);
+            return verify(value);
+        } catch (Throwable noSetter) {
+            // Older launcher: fall through to the reflective write below.
         }
 
         Field field;
